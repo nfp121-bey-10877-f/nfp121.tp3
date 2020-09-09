@@ -11,6 +11,9 @@ public class PileTest extends junit.framework.TestCase {
      * Constructeur de la classe-test PileTest
      */
     public PileTest() {
+        
+        
+        
     }
 
     /**
@@ -40,8 +43,46 @@ public class PileTest extends junit.framework.TestCase {
      * "test". Vous pouvez ébaucher le corps grâce au menu contextuel
      * "Enregistrer une méthode de test".
      */
+    
+  
 
     public void testEncourageant(){
         assertTrue(true);
     }
+
+    public void testPile() throws PilePleineException
+    {
+        Pile p1 = new Pile(2);
+        assertTrue(p1.estVide());
+        
+        try
+        {
+            p1.depiler();
+            fail();
+        }catch(PileVideException e)
+        {
+            assertTrue( e instanceof PileVideException);
+        }
+        
+        p1.empiler(1);
+        p1.empiler(2);
+        
+        try
+        {
+            p1.empiler(3);
+            fail();
+        }
+        catch(PilePleineException ee)
+        {
+            assertTrue (ee instanceof PilePleineException);
+        }
+        
+        
+        assertTrue(p1.estPleine());
+        
+        assertEquals("[2, 1]", p1.toString());
+        
+        
+    }
 }
+

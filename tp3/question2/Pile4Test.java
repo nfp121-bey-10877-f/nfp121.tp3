@@ -30,6 +30,7 @@ public class Pile4Test extends junit.framework.TestCase {
 	// Notez cependant que ce dernier ne peut saisir les objets primitifs
 	// du présentoir (les objets sans constructeur, comme int, float, etc.).
 
+	Pile4 p1, p2;
 	/**
 	 * Constructeur de la classe-test Pile4Test
 	 */
@@ -43,8 +44,8 @@ public class Pile4Test extends junit.framework.TestCase {
 	 */
 	protected void setUp() // throws java.lang.Exception
 	{
-		// Initialisez ici vos engagements
-
+		p1 = new Pile4();
+		p2 = new Pile4();
 	}
 
 	/**
@@ -56,5 +57,94 @@ public class Pile4Test extends junit.framework.TestCase {
 	{
 		// Libérez ici les ressources engagées par setUp()
 	}
+	
+	 public void test_Pile_capacite() {
+        assertEquals(PileI.CAPACITE_PAR_DEFAUT, p1.capacite());      
+      //  assertEquals(4, p3.capacite());
+
+    }
+    
+     public void test_Pile_estPleine() throws Exception {
+        PileI p = new Pile4(3);
+        p.empiler(3);
+        assertEquals(1, p.taille());
+        p.empiler(2);
+        assertEquals(2, p.taille());
+        p.empiler(1);
+        assertEquals(3, p.taille());
+
+        assertEquals(true, p.estPleine());
+        assertEquals(p.taille(), p.capacite());
+     try {
+            p.empiler(0);
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof question1.PilePleineException);
+        }
+    }
+    
+     public void test_Pile_sommet() throws Exception {
+        PileI p = new Pile4(3);
+        assertEquals(true, p.estVide());
+
+        p.empiler(new Integer(3));
+        assertEquals(" sommet ?? ", new Integer(3), p.sommet());
+        assertEquals(1, p.taille());
+        assertEquals(" depiler ?? ", new Integer(3), p.depiler());
+        assertEquals(0, p.taille());
+    }
+	
+      public void test_Pile_estVide() throws Exception {
+        PileI p = new Pile4(3);
+        assertEquals(true, p.estVide());
+        try {
+            Object r = p.depiler();
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof question1.PileVideException);
+        }
+        
+        p.empiler(4);
+        assertEquals(false, p.estVide());
+    }
+    
+        public void test_Pile_toString() throws Exception {
+        PileI pile1 = new Pile4(3);
+        assertEquals("toString incorrect ? ", "[]", pile1.toString());
+        pile1.empiler(4);
+        assertEquals("toString incorrect ? ", "[4]", pile1.toString());
+        pile1.empiler(5);
+        assertEquals("toString incorrect ? ", "[5, 4]", pile1.toString());
+        pile1.empiler(3);
+        assertEquals("toString incorrect ? ", "[3, 5, 4]", pile1.toString());
+
+    }
+    
+       public void test_Pile_TailleNegative() {
+        PileI p = new question2.Pile(-3);
+        assertEquals(p.CAPACITE_PAR_DEFAUT, p.capacite());
+
+    }
+    
+     public void test_Pile_equals() throws Exception {
+
+        p1.empiler(3);
+        p1.empiler(2);
+        p1.empiler(1);
+        p2.empiler(3);
+        p2.empiler(2);
+        p2.empiler(1);
+
+
+        assertTrue("égalité de deux piles ? ", p1.equals(p2));
+        assertTrue("égalité de deux piles ? ", p2.equals(p1));
+        assertTrue("égalité de deux piles ? ", p1.equals(p1));
+
+        p2.empiler(1);
+        assertFalse("égalité de deux piles ? ", p1.equals(p2));
+
+    }
+    
+	
 
 }
